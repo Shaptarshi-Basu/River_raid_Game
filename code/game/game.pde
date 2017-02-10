@@ -27,6 +27,8 @@ void setup() {
       background[j*BG_WIDTH + i] = 96;
     }
   }
+  background[0] = 1;
+  background[BG_HEIGHT*BG_WIDTH + 1] = 2;
 }
 
 void settings() {
@@ -95,9 +97,6 @@ void drawQuad(float x, float y, float u, float v) {
 void drawQuad(float x, float y, int frame) {
   float v = floor(frame / 32);
   float u = frame - (v * 32);
-  print(u);
-  print(v);
-  print("\n");
   float x_screen = floor(x*VID_WIDTH);
   float y_screen = floor(y*VID_WIDTH);
   vertex(x_screen, y_screen, (u*32), (v*32));
@@ -121,32 +120,21 @@ void drawBackground() {
   float v;
   float u;
   int framenum, frame;
-  int wrap = 0;
+  int wrap = 1;
   
   for(int i = 0; i <= BG_HEIGHT; i++) {
-    if(startpos+(20-i) >= BG_HEIGHT*2)
-      wrap = 1;
+    if(startpos+(20-i) < BG_HEIGHT*2)
+      wrap = 0;
+    //else
+    //  wrap = 0;
     for(int j = 0; j < BG_WIDTH; j++) {
-      framenum = (startpos+(20-i))*BG_WIDTH + j - (300*wrap);
-      if(framenum < 0  || framenum >= 600)
+      framenum = (startpos+(20-i))*BG_WIDTH + j - (600*wrap);
+      /*if(framenum < 0  || framenum >= 600)
       {
-        print("startpos: ");
-        print(startpos);
-        print("\n");
-        print("framenum: ");
-        print(framenum);
-        print("\n");
-        print("wrap: ");
-        print(wrap);
-        print("\n");
-        print("i: ");
-        print(i);
-        print("\n");
-        print("j: ");
-        print(j);
-        print("\n");
+        frame = 0;
       }
-      frame = background[framenum];
+      else*/
+        frame = background[framenum];
       v = floor(frame / 32);
       u = frame - (v*32);
       vertex(j*SPRITE_SIZE, (i-1)*SPRITE_SIZE + pixeloffset, (u*32), (v*32));
@@ -183,7 +171,7 @@ void draw() {
   textureMode(IMAGE);
   noStroke();
 
-  scroll += 1;
+  scroll += 4;
   drawBackground();
   drawSprites();
 
