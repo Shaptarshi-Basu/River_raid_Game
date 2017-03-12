@@ -63,6 +63,7 @@ void setup() {
   font = loadFont("Monospaced.bold-16.vlw");
   textFont(font, 16);
   playername = "";
+  initBullets();
 }
 
 void settings() {
@@ -96,6 +97,8 @@ void keyPressed() {
       if (keyCode == RIGHT) {
         move[3] = 1;
       }
+    } else if(key == 'z' || key == 'Z') {
+      shooting = true;
     }
   }
   else
@@ -139,6 +142,8 @@ void keyReleased() {
       if (keyCode == RIGHT) {
         move[3] = 0;
       }
+    } else if(key == 'z' || key == 'Z') {
+      shooting = false;
     }
     break;
   }
@@ -184,8 +189,37 @@ void drawBackground() {
   }
 }
 
+
+void drawPlayer() {
+  
+  if(fireframe > 0) {
+    if(fireframe > 7) {
+      fireframe = 0;
+    } else {
+      fireframe++;
+    }
+  }
+  if(shooting && fireframe == 0) {
+    fireframe = 1;
+  }
+  
+  if(fireframe > 0 && fireframe <= 4) {
+    if(fireframe == 1)
+      spawnBullet(player[0] + 5, player[1] - 16, 0, -14, 16+32, BulletType.PLAYER);
+    drawQuad(player[0] - 11, player[1] - 30, (16 + 32) + fireframe);
+  } else if(fireframe > 4 && fireframe <= 8) {
+    if(fireframe == 5)
+      spawnBullet(player[0] - 5, player[1] - 16, 0, -14, 16+32, BulletType.PLAYER);
+    drawQuad(player[0] - 21, player[1] - 30, (16 + 32) + fireframe - 4);
+  }
+   
+  drawQuad(player[0] - 16, player[1] - 16, 16);
+}
+
 //FIXME: Move elsewhere
 void drawSprites() {
+  updateBullets();
+  drawPlayer();
 }
 
 //FIXME: Move elsewhere
@@ -255,17 +289,16 @@ void draw() {
   textureMode(IMAGE);
   noStroke();
 
-  scroll += 4;
+  scroll += 5;
   drawBackground();
   drawSprites();
 
-  float speed = 4;
+  float speed = 5;
   player[0] -= move[2] * speed;
   player[0] += move[3] * speed;
   player[1] -= move[0] * speed;
   player[1] += move[1] * speed;
 
-  drawQuad(player[0] - 16, player[1] - 16, 3);
   endShape();
   
   drawGui();
