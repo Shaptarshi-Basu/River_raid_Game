@@ -11,7 +11,6 @@ class Bullet {
   BulletType type;
   
   Bullet() {
-    println("new bullet");
     x = y = vx = vy = 0;
     spr = 16 + 32;
     type = BulletType.FREE;
