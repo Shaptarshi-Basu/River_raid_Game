@@ -64,6 +64,7 @@ void setup() {
   textFont(font, 16);
   playername = "";
   initBullets();
+  initFuel();
 }
 
 void settings() {
@@ -276,6 +277,9 @@ void drawGui() {
     text("G21 PPKOSKI", VID_WIDTH/2, VID_HEIGHT/2 + SPRITE_SIZE * 3 + 24);
     break;
   case GAME:
+    text("Fuel: " + fuelAmount(), 400, 40);
+    textSize(16);
+    fill(10, 15, 20);
     break;
   default:
     text("UNKNOWN MENU SET", VID_WIDTH / 2, VID_HEIGHT / 2);
@@ -292,6 +296,7 @@ void draw() {
   scroll += 5;
   drawBackground();
   drawSprites();
+  updateFuel();
 
   float speed = 5;
   player[0] -= move[2] * speed;
