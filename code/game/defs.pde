@@ -1,6 +1,6 @@
 // File for a bunch of ugly globals and defines
 // the various stuff could be inside some singletons but there's no real benefit to it here
-
+import java.util.*;
 PImage sprite_texture;
 PImage sprite_alpha;
 PFont font;
@@ -37,7 +37,7 @@ public static final float SPRITE_SIZE_F = 32.0/VID_WIDTH;
 public static final int SPRITESHEET_SIZE = 32;
 public int[] background = new int[BG_WIDTH * (BG_HEIGHT * 2)];
 public int scroll;
-
+List<Enemy> enemyList=new ArrayList<Enemy>();
 
 float[] player = { 240, 560 };
 float[] move = {0, 0, 0, 0};

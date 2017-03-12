@@ -54,6 +54,7 @@ void setup() {
   font = loadFont("Monospaced.bold-16.vlw");
   textFont(font, 16);
   playername = "";
+  enemyList.add(0,new Enemy(1));
   initBackground();
   initBullets();
   initFuel();
@@ -228,11 +229,19 @@ void draw() {
   }
   else scroll += 5; // otherwise scroll as normal
   
+  
+  
   drawBackground();
   drawSprites();
   updateFuel();
     
   endShape();
+  Enemy e=enemyList.get(0);
+  e.enemyY+=e.speed;
+  if(e.enemyY>height){
+  enemyList.add(0,new Enemy((int) (new Random().nextInt(3) + 1)));
+  }
+  e.display(e);
   
   drawGui();
 }
