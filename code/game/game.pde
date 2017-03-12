@@ -50,20 +50,13 @@ void setMenu(Menu menu) {
 void setup() {
   sprite_texture = loadImage("spritesheet.png");  
   noSmooth();
-
   current_menu = Menu.ASKNAME;
-  
-  for(int j = 0; j < BG_HEIGHT*2; j++) {
-    for(int i = 0; i < BG_WIDTH; i++) {
-      background[j*BG_WIDTH + i] = 96;
-    }
-  }
-  background[0] = 1;
-  background[BG_HEIGHT*BG_WIDTH + 1] = 2;
   font = loadFont("Monospaced.bold-16.vlw");
   textFont(font, 16);
   playername = "";
+  initBackground();
   initBullets();
+  initFuel();
 }
 
 void settings() {
@@ -149,72 +142,6 @@ void keyReleased() {
   }
 }
 
-// FIXME: move background stuff to a separate file
-void drawBackground() { 
-  int startpos = floor((scroll)/32);
-  if(startpos >= BG_HEIGHT*2)
-  {
-    startpos -= BG_HEIGHT*2;
-    scroll -= BG_HEIGHT*2*SPRITE_SIZE;
-  }
-
-  //print(startpos);
-  int pixeloffset = scroll - floor(scroll/32)*32;
-  
-  float v;
-  float u;
-  int framenum, frame;
-  int wrap = 1;
-  
-  for(int i = 0; i <= BG_HEIGHT; i++) {
-    if(startpos+(20-i) < BG_HEIGHT*2)
-      wrap = 0;
-    //else
-    //  wrap = 0;
-    for(int j = 0; j < BG_WIDTH; j++) {
-      framenum = (startpos+(20-i))*BG_WIDTH + j - (600*wrap);
-      /*if(framenum < 0  || framenum >= 600)
-      {
-        frame = 0;
-      }
-      else*/
-        frame = background[framenum];
-      v = floor(frame / 32);
-      u = frame - (v*32);
-      vertex(j*SPRITE_SIZE, (i-1)*SPRITE_SIZE + pixeloffset, (u*32), (v*32));
-      vertex(j*SPRITE_SIZE + SPRITE_SIZE, (i-1)*SPRITE_SIZE + pixeloffset, (u*32) + SPRITE_SIZE, (v*32));
-      vertex(j*SPRITE_SIZE + SPRITE_SIZE, (i-1)*SPRITE_SIZE + SPRITE_SIZE + pixeloffset, (u*32) + SPRITE_SIZE, (v*32) + SPRITE_SIZE);
-      vertex(j*SPRITE_SIZE, (i-1)*SPRITE_SIZE + SPRITE_SIZE + pixeloffset, (u*32), (v*32) + SPRITE_SIZE);
-    }
-  }
-}
-
-
-void drawPlayer() {
-  
-  if(fireframe > 0) {
-    if(fireframe > 7) {
-      fireframe = 0;
-    } else {
-      fireframe++;
-    }
-  }
-  if(shooting && fireframe == 0) {
-    fireframe = 1;
-  }
-  
-  if(fireframe > 0 && fireframe <= 4) {
-    if(fireframe == 1)
-      spawnBullet(player[0] + 5, player[1] - 16, 0, -14, 16+32, BulletType.PLAYER);
-    drawQuad(player[0] - 11, player[1] - 30, (16 + 32) + fireframe);
-  } else if(fireframe > 4 && fireframe <= 8) {
-    if(fireframe == 5)
-      spawnBullet(player[0] - 5, player[1] - 16, 0, -14, 16+32, BulletType.PLAYER);
-    drawQuad(player[0] - 21, player[1] - 30, (16 + 32) + fireframe - 4);
-  }
-   
-  drawQuad(player[0] - 16, player[1] - 16, 16);
-}
 
 //FIXME: Move elsewhere
 void drawSprites() {
@@ -276,6 +203,9 @@ void drawGui() {
     text("G21 PPKOSKI", VID_WIDTH/2, VID_HEIGHT/2 + SPRITE_SIZE * 3 + 24);
     break;
   case GAME:
+    text("Fuel: " + fuelAmount(), 400, 40);
+    textSize(16);
+    fill(10, 15, 20);
     break;
   default:
     text("UNKNOWN MENU SET", VID_WIDTH / 2, VID_HEIGHT / 2);
@@ -300,13 +230,7 @@ void draw() {
   
   drawBackground();
   drawSprites();
-
-  float speed = 5;
-  player[0] -= move[2] * speed; //left
-  player[0] += move[3] * speed; //right
-  //player[1] -= move[0] * speed; //up
-  //player[1] += move[1] * speed; //down
-  
+  updateFuel();
     
   endShape();
   

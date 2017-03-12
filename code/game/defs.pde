@@ -39,7 +39,7 @@ public int[] background = new int[BG_WIDTH * (BG_HEIGHT * 2)];
 public int scroll;
 
 
-float[] player = { 240, 320 };
+float[] player = { 240, 560 };
 float[] move = {0, 0, 0, 0};
 boolean shooting = false;
 int fireframe = 0;
