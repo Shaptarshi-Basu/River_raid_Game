@@ -292,18 +292,27 @@ void draw() {
   texture(sprite_texture);
   textureMode(IMAGE);
   noStroke();
-
-  scroll += 5;
+  
+  if (move[0] > 0){ // if up key pressed throttle up
+    //speed = 10;
+    scroll += 7;
+  }
+  else if (move[1] > 0){ // if down key pressed slow down
+    scroll += 3;
+  }
+  else scroll += 5; // otherwise scroll as normal
+  
   drawBackground();
   drawSprites();
   updateFuel();
 
   float speed = 5;
-  player[0] -= move[2] * speed;
-  player[0] += move[3] * speed;
-  player[1] -= move[0] * speed;
-  player[1] += move[1] * speed;
-
+  player[0] -= move[2] * speed; //left
+  player[0] += move[3] * speed; //right
+  //player[1] -= move[0] * speed; //up
+  //player[1] += move[1] * speed; //down
+  
+    
   endShape();
   
   drawGui();
