@@ -1,25 +1,31 @@
 // File for a bunch of ugly globals and defines
 // the various stuff could be inside some singletons but there's no real benefit to it here
-
+import java.util.*;
 PImage sprite_texture;
 PImage sprite_alpha;
 PFont font;
 String playername;
 public static final String[] thestory = {
-  "WHATA FUCK MAN xD", 
-  "i just fall of my chair",
-  "kuz i couldnt and i CANT stop", 
-  "laugh xDXDXDXDXDDDDDDDDDDDD", 
-  "CONGRATS MAN XD",
-  "",
-  "WORK IN PROGRESS",
-  "",
-  "PLENTY OF SPACE",
-  "FOR A PROPER STORY",
-  "!!!!!"
+  "It’s the year 2000 at Hervanta", 
+  "in a parallel universe.",
+  "The newly constructed canal", 
+  "of Suoli between lake Suoli", 
+  "and lake Näsi has fallen",
+  "into hostile hands.",
+  "Your mission is to take control",
+  "of the important canal",
+  "with your own built fighter jet",
+  "TIE-Fighter 69.",
+  "Beware of the floating beer",
+  "drinkers and Putin jets and",
+  "remember to fill up the fuel",
+  "tanks by flying over the tankers",
+  "before your fuel runs out.",
+  "Destroy everything in your sight",
+  "and take back what is rightfully yours!"
 };
 
-public static final int thestory_lines = 11;
+public static final int thestory_lines = 17;
 
 public static final int BG_WIDTH = 15;
 public static final int BG_HEIGHT = 20;
@@ -31,7 +37,9 @@ public static final float SPRITE_SIZE_F = 32.0/VID_WIDTH;
 public static final int SPRITESHEET_SIZE = 32;
 public int[] background = new int[BG_WIDTH * (BG_HEIGHT * 2)];
 public int scroll;
+List<Enemy> enemyList=new ArrayList<Enemy>();
 
-
-float[] player = { 240, 320 };
+float[] player = { 240, 560 };
 float[] move = {0, 0, 0, 0};
+boolean shooting = false;
+int fireframe = 0;
