@@ -35,7 +35,7 @@ public static final int SPRITE_SIZE = 64;
 public static final int HALF_SPRITE = 32;
 public static final float PIXEL_SIZE = 1.0/VID_WIDTH;
 public static final float SPRITE_SIZE_F = 32.0/VID_WIDTH;
-public static final int SPRITESHEET_SIZE = 32;
+public static final int SPRITESHEET_SIZE = 16;
 public int[] background = new int[BG_WIDTH * (BG_HEIGHT * 2)];
 public int scroll;
 List<Enemy> enemyList=new ArrayList<Enemy>();

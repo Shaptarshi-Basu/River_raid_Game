@@ -20,14 +20,25 @@ void drawQuad(float x, float y, float u, float v) {
 
 // draw a SPRITE_SIZE sized quad with set frame instead of UV
 void drawQuad(float x, float y, int frame) {
-  float v = floor(frame / SPRITE_SIZE);
-  float u = frame - (v * SPRITE_SIZE);
+  float v = floor(frame / SPRITESHEET_SIZE);
+  float u = frame - (v * SPRITESHEET_SIZE);
   float x_screen = floor(x); //floor(x*VID_WIDTH);
   float y_screen = floor(y); //floor(y*VID_WIDTH);
-  vertex(x_screen, y_screen, (u*32), (v*32));
-  vertex(x_screen + SPRITE_SIZE, y_screen, (u*32) + SPRITE_SIZE, (v*32));
-  vertex(x_screen + SPRITE_SIZE, y_screen + SPRITE_SIZE, (u*32) + SPRITE_SIZE, (v*32) + SPRITE_SIZE);
-  vertex(x_screen, y_screen + SPRITE_SIZE, (u*32), (v*32) + SPRITE_SIZE);
+  vertex(x_screen, y_screen, (u*SPRITE_SIZE), (v*SPRITE_SIZE));
+  vertex(x_screen + SPRITE_SIZE, y_screen, (u*SPRITE_SIZE) + SPRITE_SIZE, (v*SPRITE_SIZE));
+  vertex(x_screen + SPRITE_SIZE, y_screen + SPRITE_SIZE, (u*SPRITE_SIZE) + SPRITE_SIZE, (v*SPRITE_SIZE) + SPRITE_SIZE);
+  vertex(x_screen, y_screen + SPRITE_SIZE, (u*SPRITE_SIZE), (v*SPRITE_SIZE) + SPRITE_SIZE);
+}
+
+void drawQuadHalf(float x, float y, int frame) {
+  float v = floor(frame / 32.0);
+  float u = frame - (v * 32.0);
+  float x_screen = floor(x); //floor(x*VID_WIDTH);
+  float y_screen = floor(y); //floor(y*VID_WIDTH);
+  vertex(x_screen, y_screen, (u*HALF_SPRITE), (v*HALF_SPRITE));
+  vertex(x_screen + HALF_SPRITE, y_screen, (u*HALF_SPRITE) + HALF_SPRITE, (v*HALF_SPRITE));
+  vertex(x_screen + HALF_SPRITE, y_screen + HALF_SPRITE, (u*HALF_SPRITE) + HALF_SPRITE, (v*HALF_SPRITE) + HALF_SPRITE);
+  vertex(x_screen, y_screen + HALF_SPRITE, (u*HALF_SPRITE), (v*HALF_SPRITE) + HALF_SPRITE);
 }
 
 // draw a window meant for mostly UI
@@ -38,25 +49,25 @@ void drawWindow(float x, float y, int xs, int ys) {
     for(int j = 0; j < ys; j++) {
       if(i == 0) {
         if(j == 0)
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 0);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 0);
         else if(j == ys - 1)
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 0 + 64);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 0 + 64);
         else
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 0 + 32);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 0 + 32);
       } else if(i == xs - 1) {
         if(j == 0)
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 2 + 0);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 2 + 0);
         else if(j == ys - 1)
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 2 + 64);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 2 + 64);
         else
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 2 + 32);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 2 + 32);
       } else {
         if(j == 0)
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 1 + 0);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 1 + 0);
         else if(j == ys - 1)
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 1 + 64);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 1 + 64);
         else
-          drawQuad(x + i*SPRITE_SIZE, y + j*SPRITE_SIZE, 1 + 32);
+          drawQuadHalf(x + i*HALF_SPRITE, y + j*HALF_SPRITE, 1 + 32);
       }
     }
   }
@@ -68,10 +79,10 @@ void drawShortWindow(float x, float y, int w) {
     return;
   for(int i = 0; i < w; i++) {
     if(i == 0)
-      drawQuad(x + i*SPRITE_SIZE, y, 3);
+      drawQuadHalf(x + i*HALF_SPRITE, y, 3);
     else if(i == w - 1)
-      drawQuad(x + i*SPRITE_SIZE, y, 5);
+      drawQuadHalf(x + i*HALF_SPRITE, y, 5);
     else
-      drawQuad(x + i*SPRITE_SIZE, y, 4);
+      drawQuadHalf(x + i*HALF_SPRITE, y, 4);
   }
 }

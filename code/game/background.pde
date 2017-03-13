@@ -7,7 +7,8 @@ int[] pattern = {
   512, 512, 512, 528, 528, 528, 528, 528, 528, 528, 528, 528, 528, 512, 512
 };
 
-  int TILE_SIZE = 32;
+int TILE_SIZE = 32;
+float scroll_speed = 5;
 
 void fillBackground(int row) {
   //println(row);
@@ -41,6 +42,8 @@ void initBackground() {
 }
 
 void drawBackground() {
+  scroll += floor(scroll_speed); 
+  
   int startpos = floor((scroll)/32);
   if(startpos >= BG_HEIGHT*2)
   {

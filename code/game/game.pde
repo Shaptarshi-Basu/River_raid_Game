@@ -148,12 +148,12 @@ void keyReleased() {
 void drawSprites() {
   
   Enemy e=enemyList.get(0);
-  e.enemyY+=e.speed;
-  if(e.enemyY>height){
+  e.enemyY += floor(scroll_speed) + e.speed;
+  if(e.enemyY>VID_HEIGHT){
     enemyList.add(0,new Enemy((int) (new Random().nextInt(3) + 1)));
   }
   
-  e.display(e);
+  e.display();
   updateBullets();
   drawPlayer();
 }
@@ -170,8 +170,8 @@ void drawGui() {
     // draw bitmap graphics first, no text until endShape(); 
     beginShape(QUADS);
     texture(sprite_texture);
-    drawWindow(VID_WIDTH/2 - SPRITE_SIZE * 4, VID_HEIGHT/2 - SPRITE_SIZE * 2, 8, 4);
-    drawShortWindow(VID_WIDTH/2 - SPRITE_SIZE * 3.5, VID_HEIGHT/2, 7);
+    drawWindow(VID_WIDTH/2 - HALF_SPRITE * 4, VID_HEIGHT/2 - HALF_SPRITE * 2, 8, 4);
+    drawShortWindow(VID_WIDTH/2 - HALF_SPRITE * 3.5, VID_HEIGHT/2, 7);
     endShape();
     // now draw all the texts
     textAlign(CENTER, CENTER);
@@ -184,32 +184,32 @@ void drawGui() {
   case INTRO:
     beginShape(QUADS);
     texture(sprite_texture);
-    drawWindow(VID_WIDTH/2 - SPRITE_SIZE * 6, VID_HEIGHT/2 - SPRITE_SIZE * 8, 12, 16);
+    drawWindow(VID_WIDTH/2 - HALF_SPRITE * 7, VID_HEIGHT/2 - HALF_SPRITE * 8, 14, 16);
     endShape();
     textAlign(CENTER, CENTER);
     textSize(16);
     fill(10, 15, 20);
-    text("STORY SO FAR...", VID_WIDTH / 2, VID_HEIGHT/2 - SPRITE_SIZE * 7);
+    text("STORY SO FAR...", VID_WIDTH / 2, VID_HEIGHT/2 - HALF_SPRITE * 7);
     for(int i = 0; i < thestory_lines; i++)
-      text(thestory[i], VID_WIDTH / 2, VID_HEIGHT/2 - SPRITE_SIZE * 5 + 24 * i);
+      text(thestory[i], VID_WIDTH / 2, VID_HEIGHT/2 - HALF_SPRITE * 5 + 24 * i);
     
     break;
   case MAIN:
     beginShape(QUADS);
     texture(sprite_texture);
-    drawWindow(VID_WIDTH/2 - SPRITE_SIZE * 5, VID_HEIGHT/2 - SPRITE_SIZE * 5, 10, 10);
+    drawWindow(VID_WIDTH/2 - HALF_SPRITE * 5, VID_HEIGHT/2 - HALF_SPRITE * 5, 10, 10);
     endShape();
     textAlign(CENTER, CENTER);
     textSize(16);
     fill(10, 15, 20);
-    text("MAIN MENU", VID_WIDTH/2, VID_HEIGHT/2 - SPRITE_SIZE * 4);
+    text("MAIN MENU", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 4);
     
-    text("NEW GAME", VID_WIDTH/2, VID_HEIGHT/2 - SPRITE_SIZE * 2);
-    text("HIGH SCORES", VID_WIDTH/2, VID_HEIGHT/2 - SPRITE_SIZE * 2 + 24);
-    text("QUIT", VID_WIDTH/2, VID_HEIGHT/2 - SPRITE_SIZE * 2 + 24*4);
+    text("NEW GAME", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 2);
+    text("HIGH SCORES", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 2 + 24);
+    text("QUIT", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 2 + 24*4);
     
-    text("MADE BY", VID_WIDTH/2, VID_HEIGHT/2 + SPRITE_SIZE * 3);
-    text("G21 PPKOSKI", VID_WIDTH/2, VID_HEIGHT/2 + SPRITE_SIZE * 3 + 24);
+    text("MADE BY", VID_WIDTH/2, VID_HEIGHT/2 + HALF_SPRITE * 3);
+    text("G21 PPKOSKI", VID_WIDTH/2, VID_HEIGHT/2 + HALF_SPRITE * 3 + 24);
     break;
   case GAME:
     text("Fuel: " + fuelAmount(), 400, 40);
@@ -227,17 +227,6 @@ void draw() {
   texture(sprite_texture);
   textureMode(IMAGE);
   noStroke();
-  
-  if (move[0] > 0){ // if up key pressed throttle up
-    //speed = 10;
-    scroll += 7;
-  }
-  else if (move[1] > 0){ // if down key pressed slow down
-    scroll += 3;
-  }
-  else scroll += 5; // otherwise scroll as normal
-  
-  
   
   drawBackground();
   drawSprites();
