@@ -58,6 +58,8 @@ void setup() {
   initBackground();
   initBullets();
   initFuel();
+  
+  throttle = scroll_speed;
 }
 
 void settings() {
@@ -149,8 +151,8 @@ void drawSprites() {
   
   Enemy e=enemyList.get(0);
   e.enemyY += floor(scroll_speed) + e.speed;
-  if(e.enemyY>VID_HEIGHT){
-    enemyList.add(0,new Enemy((int) (new Random().nextInt(3) + 1)));
+  if(e.enemyY>VID_HEIGHT+SPRITE_SIZE){
+    enemyList.add(0,new Enemy((int) (random(4))));
   }
   
   e.display();

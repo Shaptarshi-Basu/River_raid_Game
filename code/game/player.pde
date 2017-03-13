@@ -1,16 +1,20 @@
+float throttle;
+
 void drawPlayer() {
   
   if (move[0] > 0){ // if up key pressed throttle up
     //speed = 10;
-    scroll_speed += 0.1;
-    if(scroll_speed > 20)
-      scroll_speed = 20;
+    throttle += 0.1;
+    if(throttle > 10)
+      throttle = 10;
   }
   else if (move[1] > 0){ // if down key pressed slow down
-    scroll_speed -= 0.1;
-    if(scroll_speed < 3)
-      scroll_speed = 3;
+    throttle -= 0.1;
+    if(throttle < 2)
+      throttle = 2;
   }
+  
+  scroll_speed = floor(throttle);
   
   float speed = 5;
   player[0] -= move[2] * speed; //left
