@@ -146,6 +146,14 @@ void keyReleased() {
 
 //FIXME: Move elsewhere
 void drawSprites() {
+  
+  Enemy e=enemyList.get(0);
+  e.enemyY+=e.speed;
+  if(e.enemyY>height){
+    enemyList.add(0,new Enemy((int) (new Random().nextInt(3) + 1)));
+  }
+  
+  e.display(e);
   updateBullets();
   drawPlayer();
 }
@@ -236,12 +244,6 @@ void draw() {
   updateFuel();
     
   endShape();
-  Enemy e=enemyList.get(0);
-  e.enemyY+=e.speed;
-  if(e.enemyY>height){
-  enemyList.add(0,new Enemy((int) (new Random().nextInt(3) + 1)));
-  }
-  e.display(e);
   
   drawGui();
 }

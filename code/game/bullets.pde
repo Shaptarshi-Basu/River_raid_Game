@@ -12,7 +12,7 @@ class Bullet {
   
   Bullet() {
     x = y = vx = vy = 0;
-    spr = 16 + 32;
+    spr = 8 + 16;
     type = BulletType.FREE;
   }
   
@@ -26,7 +26,7 @@ class Bullet {
       type = BulletType.FREE;
       return;
     }
-    drawQuad(x - 16, y - 16, spr);
+    drawQuad(x - HALF_SPRITE, y - HALF_SPRITE, spr);
   }
 }
 

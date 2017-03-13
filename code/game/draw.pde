@@ -20,8 +20,8 @@ void drawQuad(float x, float y, float u, float v) {
 
 // draw a SPRITE_SIZE sized quad with set frame instead of UV
 void drawQuad(float x, float y, int frame) {
-  float v = floor(frame / 32);
-  float u = frame - (v * 32);
+  float v = floor(frame / SPRITE_SIZE);
+  float u = frame - (v * SPRITE_SIZE);
   float x_screen = floor(x); //floor(x*VID_WIDTH);
   float y_screen = floor(y); //floor(y*VID_WIDTH);
   vertex(x_screen, y_screen, (u*32), (v*32));

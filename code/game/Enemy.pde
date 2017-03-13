@@ -4,6 +4,7 @@ class Enemy {
   float enemyX;
   float enemyY;
   int enemyType;
+  int spr;
   
 
   // The Constructor is defined with arguments.
@@ -14,6 +15,7 @@ class Enemy {
       enemyX=random(100,int(width-100));
       enemyY=0;
       speed=5;
+      spr = 32*2 + 16;
       enemyType=1;
       
     }
@@ -21,6 +23,7 @@ class Enemy {
       enemyX=random(100,int(width-100));
       enemyY=0;
       speed=9;
+      spr = 32*2 + 16;
       enemyType=2;
       
     }
@@ -28,6 +31,7 @@ class Enemy {
       enemyX=random(100,int(width-100));
       enemyY=0;
       speed=7;
+      spr = 32*2 + 16;
       enemyType=3;
       
     }
@@ -35,32 +39,37 @@ class Enemy {
       enemyX=random(100,int(width-100));
       enemyY=0;
       speed=5;
+      spr = 32*2 + 16;
       enemyType=4;
       
-    }
-    
+    }  
   }
   
 
   void displayTankers(float x,float y) {
-    photo = loadImage("Tank-GTA2.png");
-    image(photo,x,y);
+    //photo = loadImage("Tank-GTA2.png");
+    //image(photo,x,y);
+    drawQuad(x - 16, y - 16, spr);
     
   }
   void displayHelicopters(float x,float y) {
-    photo = loadImage("helicopter.png");
-    image(photo,x,y);
-    
+    //photo = loadImage("helicopter.png");
+    //image(photo,x,y);
+    drawQuad(x - 16, y - 16, spr);
+    spr++;
+    if(spr > 32*2+19)
+      spr = 32*2+16;
   }
   void displayJets(float x,float y) {
-    photo = loadImage("Jet.png");
-    image(photo,x,y);
+    //photo = loadImage("Jet.png");
+    //image(photo,x,y);
+    drawQuad(x - 16, y - 16, spr);
     
   }
   void displayFuelDepots(float x,float y) {
-    photo = loadImage("oilbarrel.png");
-    image(photo,x,y);
-    
+    //photo = loadImage("oilbarrel.png");
+    //image(photo,x,y);
+    drawQuad(x - 16, y - 16, spr); 
   }
   void display(Enemy e){
     if(e.enemyType==1){

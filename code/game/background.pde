@@ -7,6 +7,8 @@ int[] pattern = {
   512, 512, 512, 528, 528, 528, 528, 528, 528, 528, 528, 528, 528, 512, 512
 };
 
+  int TILE_SIZE = 32;
+
 void fillBackground(int row) {
   //println(row);
   while(row > BG_HEIGHT*2)
@@ -34,29 +36,29 @@ void initBackground() {
   }
   background[BG_WIDTH * BG_HEIGHT] = 1;
   fillBackground(20);
-  nextfill = 0 + 6*SPRITE_SIZE;
+  nextfill = 0 + 6*TILE_SIZE;
   nextrow = 20 + 6;
 }
 
-void drawBackground() { 
+void drawBackground() {
   int startpos = floor((scroll)/32);
   if(startpos >= BG_HEIGHT*2)
   {
     startpos -= BG_HEIGHT*2;
-    scroll -= BG_HEIGHT*2*SPRITE_SIZE;
-    nextfill -= BG_HEIGHT*2*SPRITE_SIZE;
+    scroll -= BG_HEIGHT*2*TILE_SIZE;
+    nextfill -= BG_HEIGHT*2*TILE_SIZE;
   }
   
   if(scroll > nextfill) {
     fillBackground(nextrow);
-    nextfill = nextfill + 6*SPRITE_SIZE;
+    nextfill = nextfill + 6*TILE_SIZE;
     nextrow = nextrow + 6;
     if(nextrow > BG_HEIGHT * 2)
       nextrow -= BG_HEIGHT * 2;
   }
 
   //print(startpos);
-  int pixeloffset = scroll - floor(scroll/32)*32;
+  int pixeloffset = scroll - floor(scroll/TILE_SIZE)*TILE_SIZE;
   
   float v;
   float u;
@@ -76,12 +78,12 @@ void drawBackground() {
       }
       else*/
         frame = background[framenum];
-      v = floor(frame / 32);
-      u = frame - (v*32);
-      vertex(j*SPRITE_SIZE, (i-1)*SPRITE_SIZE + pixeloffset, (u*32), (v*32));
-      vertex(j*SPRITE_SIZE + SPRITE_SIZE, (i-1)*SPRITE_SIZE + pixeloffset, (u*32) + SPRITE_SIZE, (v*32));
-      vertex(j*SPRITE_SIZE + SPRITE_SIZE, (i-1)*SPRITE_SIZE + SPRITE_SIZE + pixeloffset, (u*32) + SPRITE_SIZE, (v*32) + SPRITE_SIZE);
-      vertex(j*SPRITE_SIZE, (i-1)*SPRITE_SIZE + SPRITE_SIZE + pixeloffset, (u*32), (v*32) + SPRITE_SIZE);
+      v = floor(frame / TILE_SIZE);
+      u = frame - (v*TILE_SIZE);
+      vertex(j*TILE_SIZE, (i-1)*TILE_SIZE + pixeloffset, (u*32), (v*32));
+      vertex(j*TILE_SIZE + TILE_SIZE, (i-1)*TILE_SIZE + pixeloffset, (u*32) + TILE_SIZE, (v*32));
+      vertex(j*TILE_SIZE + TILE_SIZE, (i-1)*TILE_SIZE + TILE_SIZE + pixeloffset, (u*32) + TILE_SIZE, (v*32) + TILE_SIZE);
+      vertex(j*TILE_SIZE, (i-1)*TILE_SIZE + TILE_SIZE + pixeloffset, (u*32), (v*32) + TILE_SIZE);
     }
   }
 }
