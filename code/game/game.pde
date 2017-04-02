@@ -7,7 +7,8 @@ public Menu current_menu;
 public int current_menu_max;
 public int current_menu_selection;
 public float[] current_menu_bboxes; //mouse input
-
+public int moveValue=4;
+public int helicopterMoveDirection=0;
 void useMenu(int sel) {
   switch(current_menu) {
   case ASKNAME:
@@ -48,6 +49,7 @@ void setMenu(Menu menu) {
 }
 
 void setup() {
+  
   sprite_texture = loadImage("spritesheet.png");  
   noSmooth();
   current_menu = Menu.ASKNAME;
@@ -150,9 +152,28 @@ void keyReleased() {
 void drawSprites() {
   
   Enemy e=enemyList.get(0);
+    
+  if(e.enemyType==3){
+    if(player[0]<e.enemyX){
+    e.enemyX-=2;
+    }
+    if(player[0]>e.enemyX){
+    e.enemyX+=2;
+    }
+  }
+    if(e.enemyType==1){
+    
+    e.enemyX+=moveValue; 
+    if(e.enemyX<=(0+SPRITE_SIZE+50)){
+    moveValue=4;
+    }
+    else if(e.enemyX>=(VID_WIDTH+SPRITE_SIZE-200)){
+    moveValue=-4;
+    }
+  }
   e.enemyY += floor(scroll_speed) + e.speed;
   if(e.enemyY>VID_HEIGHT+SPRITE_SIZE){
-    enemyList.add(0,new Enemy((int) (random(4))));
+    enemyList.add(0,new Enemy((int) (random(3))));
   }
   
   e.display();
