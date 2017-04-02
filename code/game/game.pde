@@ -8,6 +8,7 @@ public int current_menu_max;
 public int current_menu_selection;
 public float[] current_menu_bboxes; //mouse input
 public int moveValue=4;
+public int helicopterMoveDirection=0;
 void useMenu(int sel) {
   switch(current_menu) {
   case ASKNAME:
@@ -152,13 +153,21 @@ void drawSprites() {
   
   Enemy e=enemyList.get(0);
     
-  if(e.enemyType==1){
+  if(e.enemyType==3){
+    if(player[0]<e.enemyX){
+    e.enemyX-=2;
+    }
+    if(player[0]>e.enemyX){
+    e.enemyX+=2;
+    }
+  }
+    if(e.enemyType==1){
     
     e.enemyX+=moveValue; 
     if(e.enemyX<=(0+SPRITE_SIZE+50)){
     moveValue=4;
     }
-    else if(e.enemyX>=(VID_WIDTH+SPRITE_SIZE-00)){
+    else if(e.enemyX>=(VID_WIDTH+SPRITE_SIZE-200)){
     moveValue=-4;
     }
   }
