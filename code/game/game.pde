@@ -7,8 +7,7 @@ public Menu current_menu;
 public int current_menu_max;
 public int current_menu_selection;
 public float[] current_menu_bboxes; //mouse input
-public int moveValue=4;
-public int helicopterMoveDirection=0;
+
 void useMenu(int sel) {
   switch(current_menu) {
   case ASKNAME:
@@ -56,9 +55,9 @@ void setup() {
   font = loadFont("Monospaced.bold-16.vlw");
   textFont(font, 16);
   playername = "";
-  enemyList.add(0,new Enemy(1));
   initBackground();
   initBullets();
+  initEnemies();
   initFuel();
   
   throttle = scroll_speed;
@@ -150,33 +149,10 @@ void keyReleased() {
 
 //FIXME: Move elsewhere
 void drawSprites() {
+  if(active_enemies < 1)
+    spawnEnemy(floor(random(4)));
   
-  Enemy e=enemyList.get(0);
-    
-  if(e.enemyType==3){
-    if(player[0]<e.enemyX){
-    e.enemyX-=2;
-    }
-    if(player[0]>e.enemyX){
-    e.enemyX+=2;
-    }
-  }
-    if(e.enemyType==1){
-    
-    e.enemyX+=moveValue; 
-    if(e.enemyX<=(0+SPRITE_SIZE+50)){
-    moveValue=4;
-    }
-    else if(e.enemyX>=(VID_WIDTH+SPRITE_SIZE-200)){
-    moveValue=-4;
-    }
-  }
-  e.enemyY += floor(scroll_speed) + e.speed;
-  if(e.enemyY>VID_HEIGHT+SPRITE_SIZE){
-    enemyList.add(0,new Enemy((int) (random(3))));
-  }
-  
-  e.display();
+  updateEnemies();
   updateBullets();
   drawPlayer();
 }

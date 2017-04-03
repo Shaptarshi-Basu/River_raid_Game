@@ -16,24 +16,40 @@ class Bullet {
     type = BulletType.FREE;
   }
   
+  void free() {
+    type = BulletType.FREE;
+  }
+  
+  void checkTouch() {
+    if(type == BulletType.PLAYER) {
+      for(int i = 0; i < MAX_ENEMIES; i++) {
+        if(enemies[i].type > 0) {
+          if(checkCollision(x, y, 16, 16, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h) > 0)
+            println("hit" + str(random(5)));
+        }
+      }
+    }
+  }
+  
   void update() {
     if(type == BulletType.FREE)
       return;
-      
+    checkTouch();
     x += vx;
     y += vy;
     if(x > VID_WIDTH + 16 || x < -16 || y > VID_HEIGHT + 16 || y < -16) {
-      type = BulletType.FREE;
+      free();
       return;
     }
     drawQuad(x - HALF_SPRITE, y - HALF_SPRITE, spr);
   }
 }
 
+
 public static final int MAX_BULLETS = 256;
 public Bullet[] bullets = new Bullet[MAX_BULLETS];
+
 void initBullets() {
-  println("init boolets");
   for(int i = 0; i < MAX_BULLETS; i++)
     bullets[i] = new Bullet();
 }
@@ -55,7 +71,7 @@ int spawnBullet(float x, float y, float vx, float vy, int spr, BulletType type) 
 }
 
 void updateBullets() {
-  for(int i = 1; i < MAX_BULLETS; i++) {
+  for(int i = 0; i < MAX_BULLETS; i++) {
     bullets[i].update();
   }
 }

@@ -39,8 +39,3 @@ public static final int SPRITESHEET_SIZE = 16;
 public int[] background = new int[BG_WIDTH * (BG_HEIGHT * 2)];
 public int scroll;
 List<Enemy> enemyList=new ArrayList<Enemy>();
-
-float[] player = { 240, 560 };
-float[] move = {0, 0, 0, 0};
-boolean shooting = false;
-int fireframe = 0;

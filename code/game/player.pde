@@ -1,3 +1,9 @@
+
+float[] player = { 240, 560 };
+float[] move = {0, 0, 0, 0};
+boolean shooting = false;
+int fireframe = 0;
+
 float throttle;
 
 void drawPlayer() {
