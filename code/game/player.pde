@@ -50,4 +50,7 @@ void drawPlayer() {
   }
    
   drawQuad(player[0] - HALF_SPRITE, player[1] - HALF_SPRITE, 8);
+  int tempfuel = 64-(fuelAmount()*64 / 10000);
+  drawQuad(VID_WIDTH-64, VID_HEIGHT-64, 64, tempfuel, 256+64, 0); // Jerry can can (green)
+  drawQuad(VID_WIDTH-64, VID_HEIGHT-64+tempfuel, 64, 64-tempfuel, 256, tempfuel); // Jerry can can (red)
 }

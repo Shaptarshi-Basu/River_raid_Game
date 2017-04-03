@@ -43,7 +43,7 @@ class Enemy {
       speed = 0;
       spr = 16*3 + 8;
       type = 1; 
-      xv = 0; //floor(random(0,2))*8 - 4;
+      xv = floor(random(0,2))*8 - 4;
     }
     else if(choice == 1) { // jet
       x = random(100,int(VID_WIDTH-100));
@@ -104,10 +104,10 @@ class Enemy {
   void displayHelicopter() {
     x += round(xv);
     if(player[0]<x && xv > -4){
-      xv -= 0.4;
+      xv -= 0.3;
     }
     else if(player[0]>x && xv < 4){
-      xv += 0.4;
+      xv += 0.3;
     }
     
     drawQuad(x - HALF_SPRITE, y - HALF_SPRITE, spr);
