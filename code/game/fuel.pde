@@ -3,7 +3,7 @@ class Fuel {
   int fuel_amount;
   
   Fuel() {
-    fuel_amount = 10000;
+    fuel_amount = 5000;
   }
   
   void update() {

@@ -38,4 +38,7 @@ public static final float SPRITE_SIZE_F = 32.0/VID_WIDTH;
 public static final int SPRITESHEET_SIZE = 16;
 public int[] background = new int[BG_WIDTH * (BG_HEIGHT * 2)];
 public int scroll;
+public int fade;
+public int fadetarget;
+public int stage_message_time;
 List<Enemy> enemyList=new ArrayList<Enemy>();
