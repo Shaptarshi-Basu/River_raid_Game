@@ -8,8 +8,12 @@ class Fuel {
   
   void update() {
     if (fuel_amount == 0)
-      return;
+      killPlayer();
     fuel_amount--;
+  }
+
+  void setFuelToMax() {
+    fuel_amount = 5000;
   }
 
   void addFuel(int amount) {
@@ -36,5 +40,12 @@ int fuelAmount() {
 }
 
 void refuel() {
-  fuel.addFuel(25);
+  if ((fuelAmount() + 30) > 5000)
+    fuel.setFuelToMax();
+  else
+    fuel.addFuel(30);
+}
+
+void setFuelToMax() {
+  fuel.setFuelToMax();
 }

@@ -12,6 +12,8 @@ void killPlayer() {
     scroll_speed = 2;
   deadframe = 0;
 
+  setFuelToMax();
+
   for(int i = 0; i < 3; i++) {
     spawnFx(player[0], player[1], random(-4, 4), random(-4, 4), fxtype.EXP1);
     spawnFx(player[0], player[1], random(-15, 15), random(-15, 15), fxtype.EXP2);
