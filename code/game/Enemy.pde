@@ -33,6 +33,9 @@ class Enemy {
       }
       break;
     default: // rest
+      if (checkCollision(player[0], player[1], 16, 16, x, y, w, h) > 0){
+        killPlayer();
+      }
       break;
     }
   }
