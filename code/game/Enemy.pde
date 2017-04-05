@@ -27,8 +27,10 @@ class Enemy {
     switch(type)
     {
     case 4: // fuel depot
-      if (checkCollision(player[0], player[1], 16, 16, x, y, w, h) > 0)
+      if (checkCollision(player[0], player[1], 16, 16, x, y, w, h) > 0){
         refuel();
+        this.free();
+      }
       break;
     default: // rest
       break;
@@ -222,6 +224,7 @@ void updateEnemies() {
     if(enemies[i].type > 0)
       enemies[i].display();
   }
+  
 }
 
 void resetEnemies() {

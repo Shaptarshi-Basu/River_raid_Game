@@ -24,8 +24,10 @@ class Bullet {
     if(type == BulletType.PLAYER) {
       for(int i = 0; i < MAX_ENEMIES; i++) {
         if(enemies[i].type > 0) {
-          //if(checkCollision(x, y, 16, 16, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h) > 0)
-          //  println("hit");
+          /*if(checkCollision(x , y, 16, 16, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h) > 0){
+            enemies[i].free();
+            enemiesDestroyed();
+          }*/
         }
       }
     }

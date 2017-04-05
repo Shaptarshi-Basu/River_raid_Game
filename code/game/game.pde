@@ -61,6 +61,7 @@ void setup() {
   initBullets();
   initEnemies();
   initFuel();
+  initScore();
   initFx();
   
   throttle = scroll_speed;
@@ -231,7 +232,14 @@ void drawGui() {
       text("Entering Stage " + stage, VID_WIDTH/2, VID_HEIGHT/2 - SPRITE_SIZE * 2 - y);
       fill(10, 15, 20);
       stage_message_time--;
+    
     }
+    text("Fuel: " + fuelAmount(), 400, 40);
+    textSize(16);
+    fill(10, 15, 20);
+    text("Score: " + scoreAmount(), 60, 40);
+    textSize(16);
+    fill(10, 15, 20);
     break;
   default:
     text("UNKNOWN MENU SET", VID_WIDTH / 2, VID_HEIGHT / 2);
@@ -261,6 +269,7 @@ void draw() {
   if(current_menu == Menu.GAME) {
     drawSprites();
     updateFuel();
+    updateScore();
   }
     
   endShape();

@@ -13,7 +13,7 @@ class Fuel {
   }
 
   void setFuelToMax() {
-    fuel_amount = 5000;
+    fuel_amount = 3000;
   }
 
   void addFuel(int amount) {
@@ -40,10 +40,10 @@ int fuelAmount() {
 }
 
 void refuel() {
-  if ((fuelAmount() + 30) > 5000)
+  if ((fuelAmount() + 100) > 5000)
     fuel.setFuelToMax();
   else
-    fuel.addFuel(30);
+    fuel.addFuel(100);
 }
 
 void setFuelToMax() {
