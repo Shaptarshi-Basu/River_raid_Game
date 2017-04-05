@@ -7,7 +7,7 @@ class Score {
   }
   
   void update() {
-    score++;
+   // score++;
   }
 
 
@@ -34,7 +34,6 @@ int scoreAmount() {
   return score.getScore();
 }
 
-void enemiesDestroyed() {
-  
-    score.addScore(100);
+void enemiesDestroyed(int amt) {
+    score.addScore(amt);
 }

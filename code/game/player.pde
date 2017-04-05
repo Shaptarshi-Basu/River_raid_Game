@@ -8,11 +8,12 @@ int deadframe = -1;
 float throttle;
 
 void killPlayer() {
+  if(deadframe >= 0)
+    return;
+    
   if(scroll_speed > 2)
     scroll_speed = 2;
   deadframe = 0;
-
-  setFuelToMax();
 
   for(int i = 0; i < 3; i++) {
     spawnFx(player[0], player[1], random(-4, 4), random(-4, 4), fxtype.EXP1);
@@ -24,12 +25,12 @@ void drawPlayer() {
   if(deadframe < 0) {
     
     float maxthrottle = 7 + stage;
-    float minthrottle = 2 + stage;
+    float minthrottle = 2 + stage * 0.6;
     
     if (move[0] > 0) // if up key pressed throttle up
-      throttle += 0.1;
+      throttle += 0.3;
     else if (move[1] > 0) // if down key pressed slow down
-      throttle -= 0.1;
+      throttle -= 0.3;
     
     if(throttle > maxthrottle)
       throttle = maxthrottle;
@@ -87,6 +88,7 @@ void drawPlayer() {
       resetEnemies();
       resetBullets();
       throttle = 3;
+      setFuelToMax();
     }
     if(deadframe == 100) {
       fadetarget = 255;
@@ -102,7 +104,7 @@ void drawPlayer() {
   }
   
   drawQuad(player[0] - HALF_SPRITE, player[1] - HALF_SPRITE, 8);
-  int tempfuel = 64-(fuelAmount()*64 / 5000);
+  int tempfuel = 64-(fuelAmount()*64 / max_fuel);
   drawQuad(VID_WIDTH-64, VID_HEIGHT-64, 64, tempfuel, 256+64, 0); // Jerry can can (green)
   drawQuad(VID_WIDTH-64, VID_HEIGHT-64+tempfuel, 64, 64-tempfuel, 256, tempfuel); // Jerry can can (red)
 }

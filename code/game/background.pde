@@ -130,11 +130,11 @@ void drawBackground() {
         num = 0;
         
         // FIXME: move this to where bridge is dying
-        if(stage_patterns > 11 + stage) {
+        /*if(stage_patterns > 11 + stage) {
           stage++;
           stage_patterns = 0;
           showStageMessage();
-        }
+        }*/
       } else {
         spawnEnemy(4);
         spawn_delay = 12*SPRITE_SIZE;

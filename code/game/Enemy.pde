@@ -9,6 +9,8 @@ class Enemy {
   int type;
   int spr;
   float xv;
+  int hp;
+  int points;
    
   // initialize object to empty, type 0 meaning not active
   Enemy() {
@@ -20,6 +22,36 @@ class Enemy {
     speed = 0;
     spr = 0;
     xv = 0;
+    hp = 0;
+    points = 0;
+  }
+  
+  void kill() {
+    for(int i = 0; i < 3; i++) {
+      spawnFx(x, y, random(-4, 4), random(-4, 4), fxtype.EXP1);
+      spawnFx(x, y, random(-15, 15), random(-15, 15), fxtype.EXP2);
+    }
+    if(type == 1) { // ship needs more splosions
+      spawnFx(x - 32, y, random(-4, 4), random(-4, 4), fxtype.EXP1);
+      spawnFx(x + 32, y, random(-4, 4), random(-4, 4), fxtype.EXP1);
+    }
+    if(type == 5) { // bridge needs more splosions and stage ++
+      stage++;
+      stage_patterns = 0;
+      showStageMessage();
+      for(int j = 0; j < 8; j++) {
+        spawnFx(x - 128 + 32*j, y - 16, random(-2, 2), random(-2, 2), fxtype.EXP1);
+        spawnFx(x - 128 + 32*j, y + 16, random(-2, 2), random(-2, 2), fxtype.EXP1);
+      }
+    }
+    enemiesDestroyed(points);
+    free();
+  }
+  
+  void damage(int amount) {
+    hp -= amount;
+    if(hp <= 0)
+      kill();
   }
   
   // fill this to check for player vs enemy/fuel depot collision
@@ -27,14 +59,21 @@ class Enemy {
     switch(type)
     {
     case 4: // fuel depot
-      if (checkCollision(player[0], player[1], 16, 16, x, y, w, h) > 0){
+      if (checkCollision(player[0], player[1], 24, 24, x, y, w, h) > 0){
         refuel();
-        this.free();
+        // customer requirement requires it to stay
+        //this.free();
+      }
+      break;
+    case 5: // bridge
+      if (checkCollision(player[0], player[1], 0, 0, x, y, w, h) > 0) {
+        killPlayer();
       }
       break;
     default: // rest
-      if (checkCollision(player[0], player[1], 16, 16, x, y, w, h) > 0){
+      if (checkCollision(player[0], player[1], 0, 0, x, y, w, h) > 0){
         killPlayer();
+        kill();
       }
       break;
     }
@@ -50,6 +89,8 @@ class Enemy {
       speed = 0;
       spr = 16*3 + 8;
       type = 1;
+      hp = 5;
+      points = 500;
       float maxspeed = stage*0.5 + 1;
       if(maxspeed > 9)
         maxspeed = 9;
@@ -63,6 +104,8 @@ class Enemy {
       speed = 4;
       spr = 16*4 + 8;
       type = 2;
+      hp = 3;
+      points = 250;
     }
     else if(choice == 2) { // helicopter
       x = random(100,int(VID_WIDTH-100));
@@ -73,6 +116,8 @@ class Enemy {
       spr = 16*2 + 8;
       type = 3;
       xv = 0;
+      hp = 3;
+      points = 125;
     }
     else if(choice == 3) { // fuel depot
       y = -SPRITE_SIZE;
@@ -92,6 +137,8 @@ class Enemy {
       speed = 0;
       spr = 0;
       type = 5;
+      hp = 12;
+      points = 1000;
     }
   }
   
@@ -216,7 +263,10 @@ void updateEnemies() {
   
   if(spawn_delay < 0)
   {
-    spawnEnemy(floor(random(4)));
+    if(fuelAmount() < 90)
+      spawnEnemy(3);
+    else
+      spawnEnemy(floor(random(4)));
     spawn_delay = SPRITE_SIZE*12 - (SPRITE_SIZE*stage);
     if(spawn_delay < SPRITE_SIZE * 2)
       spawn_delay = SPRITE_SIZE * 2;
