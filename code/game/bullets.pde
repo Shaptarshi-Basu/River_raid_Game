@@ -23,11 +23,12 @@ class Bullet {
   void checkTouch() {
     if(type == BulletType.PLAYER) {
       for(int i = 0; i < MAX_ENEMIES; i++) {
-        if(enemies[i].type > 0) {
-          /*if(checkCollision(x , y, 16, 16, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h) > 0){
+        if(enemies[i].type > 0 &&enemies[i].type!=4 ) {
+          if(checkCollision(x , y, 16, 16, enemies[i].x, enemies[i].y, enemies[i].w, enemies[i].h) > 0){
+            spawnFx(x, y, random(-2, 2), random(-2, 2), fxtype.EXP1);
             enemies[i].free();
             enemiesDestroyed();
-          }*/
+          }
         }
       }
     }
