@@ -41,6 +41,8 @@ void setMenu(Menu menu) {
     current_menu_selection = 0;
     break;
   case GAME:
+    throttle = 2;
+    showStageMessage();
     current_menu_max = 0;
     current_menu_selection = 0;
     break;
@@ -59,8 +61,13 @@ void setup() {
   initBullets();
   initEnemies();
   initFuel();
+  initFx();
   
   throttle = scroll_speed;
+  fade = 0;
+  fadetarget = 255;
+  stage_message_time = 0;
+  spawn_delay = SPRITE_SIZE * 16; // how many pixels until first enemy
 }
 
 void settings() {
@@ -149,12 +156,14 @@ void keyReleased() {
 
 //FIXME: Move elsewhere
 void drawSprites() {
-  if(active_enemies < 1)
-    spawnEnemy(floor(random(4)));
-  
   updateEnemies();
   updateBullets();
   drawPlayer();
+  updateFx();
+}
+
+void showStageMessage() {
+  stage_message_time = 120;
 }
 
 //FIXME: Move elsewhere
@@ -211,9 +220,18 @@ void drawGui() {
     text("G21 PPKOSKI", VID_WIDTH/2, VID_HEIGHT/2 + HALF_SPRITE * 3 + 24);
     break;
   case GAME:
-    text("Fuel: " + fuelAmount(), 400, 40);
-    textSize(16);
-    fill(10, 15, 20);
+    if(stage_message_time > 0) {
+      int y = 0;
+      if(stage_message_time > 90)
+        y = (stage_message_time-90) * 10;
+      else if(stage_message_time < 30)
+        y = 300 - (stage_message_time) * 10;
+      text("Entering Stage " + stage, VID_WIDTH/2 + sin(stage_message_time*0.1)*2, VID_HEIGHT/2 - SPRITE_SIZE * 2 + cos(stage_message_time*0.1)*2 - y);
+      fill(255, 255, 255);
+      text("Entering Stage " + stage, VID_WIDTH/2, VID_HEIGHT/2 - SPRITE_SIZE * 2 - y);
+      fill(10, 15, 20);
+      stage_message_time--;
+    }
     break;
   default:
     text("UNKNOWN MENU SET", VID_WIDTH / 2, VID_HEIGHT / 2);
@@ -222,14 +240,28 @@ void drawGui() {
 }
 
 void draw() {
+  if(fade < fadetarget)
+  {
+    fade += 5;
+    if(fade > fadetarget)
+      fade = fadetarget;
+  } else {
+    fade -= 5;
+    if(fade < fadetarget)
+      fade = fadetarget;
+  }
+  
+  tint(fade, fade, fade);
   beginShape(QUADS);
   texture(sprite_texture);
   textureMode(IMAGE);
   noStroke();
   
   drawBackground();
-  drawSprites();
-  updateFuel();
+  if(current_menu == Menu.GAME) {
+    drawSprites();
+    updateFuel();
+  }
     
   endShape();
   
