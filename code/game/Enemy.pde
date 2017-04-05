@@ -27,6 +27,8 @@ class Enemy {
     switch(type)
     {
     case 4: // fuel depot
+      if (checkCollision(player[0], player[1], 16, 16, x, y, w, h) > 0)
+        refuel();
       break;
     default: // rest
       break;

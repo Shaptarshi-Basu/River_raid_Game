@@ -3,7 +3,7 @@ class Fuel {
   int fuel_amount;
   
   Fuel() {
-    fuel_amount = 10000;
+    fuel_amount = 3000;
   }
   
   void update() {
@@ -33,4 +33,8 @@ void updateFuel() {
 
 int fuelAmount() {
   return fuel.getFuel();
+}
+
+void refuel() {
+  fuel.addFuel(25);
 }
