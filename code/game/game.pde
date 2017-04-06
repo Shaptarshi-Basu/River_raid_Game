@@ -222,9 +222,13 @@ void drawGui() {
     break;
   case GAME:
     if(stage_message_time > 0) {
+      textAlign(CENTER, CENTER);
       int y = 0;
+      textSize(16);
       if(stage_message_time > 90)
         y = (stage_message_time-90) * 10;
+      else if(stage_message_time > 30)
+        textSize(16+(stage_message_time - 30)*0.1);
       else if(stage_message_time < 30)
         y = 300 - (stage_message_time) * 10;
       text("Entering Stage " + stage, VID_WIDTH/2 + sin(stage_message_time*0.1)*2, VID_HEIGHT/2 - SPRITE_SIZE * 2 + cos(stage_message_time*0.1)*2 - y);
@@ -234,11 +238,16 @@ void drawGui() {
       stage_message_time--;
     
     }
-    text("Fuel: " + fuelAmount(), 400, 40);
+    textAlign(LEFT, TOP);
     textSize(16);
-    fill(10, 15, 20);
-    text("Score: " + scoreAmount(), 60, 40);
+    text("Score:", 8, 40);
+    textSize(16 + scoreTime());
+    text(scoreAmount(), 8, 40 + 20);
+    fill(255, 255, 255);
     textSize(16);
+    text("Score:", 8, 38);
+    textSize(16 + scoreTime());
+    text(scoreAmount(), 8, 38 + 20);
     fill(10, 15, 20);
     break;
   default:

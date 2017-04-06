@@ -4,13 +4,20 @@ float[] move = {0, 0, 0, 0};
 boolean shooting = false;
 int fireframe = 0;
 int deadframe = -1;
+int lives = 3;
 
 float throttle;
 
 void killPlayer() {
   if(deadframe >= 0)
     return;
-    
+  if(lives > 0) {
+    spawnFx(0 + HALF_SPRITE, 640 - SPRITE_SIZE - SPRITE_SIZE * (lives-1) + HALF_SPRITE, 0, -2, fxtype.EXP1);
+    spawnFx(0 + HALF_SPRITE, 640 - SPRITE_SIZE - SPRITE_SIZE * (lives-1) + HALF_SPRITE, random(-8, 8), -2 + random(-8, 8), fxtype.EXP2);
+    spawnFx(0 + HALF_SPRITE, 640 - SPRITE_SIZE - SPRITE_SIZE * (lives-1) + HALF_SPRITE, random(-8, 8), -2 + random(-8, 8), fxtype.EXP2);
+    spawnFx(0 + HALF_SPRITE, 640 - SPRITE_SIZE - SPRITE_SIZE * (lives-1) + HALF_SPRITE, random(-8, 8), -2 + random(-8, 8), fxtype.EXP2);
+    lives--;
+  }
   if(scroll_speed > 2)
     scroll_speed = 2;
   deadframe = 0;
@@ -107,4 +114,7 @@ void drawPlayer() {
   int tempfuel = 64-(fuelAmount()*64 / max_fuel);
   drawQuad(VID_WIDTH-64, VID_HEIGHT-64, 64, tempfuel, 256+64, 0); // Jerry can can (green)
   drawQuad(VID_WIDTH-64, VID_HEIGHT-64+tempfuel, 64, 64-tempfuel, 256, tempfuel); // Jerry can can (red)
+  
+  for(int l = 0; l < lives; l++)
+    drawQuad(0, 640 - SPRITE_SIZE - SPRITE_SIZE * l, 8);
 }
