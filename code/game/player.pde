@@ -26,6 +26,9 @@ void killPlayer() {
     spawnFx(player[0], player[1], random(-4, 4), random(-4, 4), fxtype.EXP1);
     spawnFx(player[0], player[1], random(-15, 15), random(-15, 15), fxtype.EXP2);
   }
+  
+  //musicfile.stop();
+    
 }
 
 void drawPlayer() {
@@ -96,6 +99,8 @@ void drawPlayer() {
       resetBullets();
       throttle = 3;
       setFuelToMax();
+
+      //musicfile.loop();
     }
     if(deadframe == 100) {
       fadetarget = 255;
