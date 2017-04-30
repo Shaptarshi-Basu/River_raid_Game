@@ -1,4 +1,6 @@
 import processing.opengl.*;
+//import processing.sound.*;
+//SoundFile musicfile;
 
 public enum Menu {
   ASKNAME, INTRO, MAIN, GAME
@@ -45,6 +47,7 @@ void setMenu(Menu menu) {
     showStageMessage();
     current_menu_max = 0;
     current_menu_selection = 0;
+    //musicfile.loop();
     break;
   }
 }
@@ -69,6 +72,8 @@ void setup() {
   fadetarget = 255;
   stage_message_time = 0;
   spawn_delay = SPRITE_SIZE * 16; // how many pixels until first enemy
+  
+  //musicfile = new SoundFile(this, "RRmusic.wav");
 }
 
 void settings() {
