@@ -36,6 +36,12 @@ class Bullet {
         }
       }
     }
+    else if(type == BulletType.SMALL) {
+      if(checkCollision(player[0], player[1], 8, 8, x, y, 8, 8) > 0) {
+        killPlayer();
+        free();
+      }
+    }
   }
   
   void update() {

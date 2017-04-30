@@ -11,6 +11,7 @@ class Enemy {
   float xv;
   int hp;
   int points;
+  int think;
    
   // initialize object to empty, type 0 meaning not active
   Enemy() {
@@ -106,6 +107,7 @@ class Enemy {
       type = 2;
       hp = 3;
       points = 250;
+      think = 10;
     }
     else if(choice == 2) { // helicopter
       x = random(100,int(VID_WIDTH-100));
@@ -191,10 +193,25 @@ class Enemy {
     spr++;
     if(spr > 16*2+11)
       spr = 16*2+8;
+    
+    think--;
+    if(think < 0) {
+      spawnBullet(x, y, 0, 16, 16*6 + 8, BulletType.SMALL);
+      think = 25;
+    }
   }
   
   void displayJet() {
     drawQuad(x - HALF_SPRITE, y - HALF_SPRITE, spr);
+    think--;
+    if(think < 0) {
+      float tvx = player[0] - x;
+      float tvy = player[1] - y;
+      float normx = tvx / sqrt(tvx*tvx + tvy*tvy);
+      float normy = tvy / sqrt(tvx*tvx + tvy*tvy);
+      spawnBullet(x, y, normx*4, normy*4, 16*6 + 8, BulletType.SMALL);
+      think = 20;
+    }
   }
   
   void displayFuelDepot() {
