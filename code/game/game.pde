@@ -1,6 +1,6 @@
 import processing.opengl.*;
-//import processing.sound.*;
-//SoundFile musicfile;
+//import processing.sound.*;  // EXPERIMENTAL: MUSIC
+//SoundFile musicfile;        // EXPERIMENTAL: MUSIC
 
 public enum Menu {
   ASKNAME, INTRO, MAIN, GAME, SCORES
@@ -8,7 +8,6 @@ public enum Menu {
 public Menu current_menu;
 public int current_menu_max;
 public int current_menu_selection;
-public float[] current_menu_bboxes; //mouse input
 
 void useMenu(int sel) {
   switch(current_menu) {
@@ -57,7 +56,7 @@ void setMenu(Menu menu) {
     showStageMessage();
     current_menu_max = 0;
     current_menu_selection = 0;
-    //musicfile.loop();
+    //musicfile.loop();        // EXPERIMENTAL: MUSIC
     break;
   }
 }
@@ -86,7 +85,7 @@ void setup() {
   stage_message_time = 0;
   spawn_delay = SPRITE_SIZE * 16; // how many pixels until first enemy
   
-  //musicfile = new SoundFile(this, "RRmusic.wav");
+  //musicfile = new SoundFile(this, "RRmusic.wav");      // EXPERIMENTAL: MUSIC
 }
 
 void settings() {
