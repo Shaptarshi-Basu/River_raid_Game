@@ -1,3 +1,10 @@
+
+public static final int BG_WIDTH = 15;
+public static final int BG_HEIGHT = 20;
+
+public int[] background = new int[BG_WIDTH * (BG_HEIGHT * 2)];
+public int scroll;
+
 int[] pattern = { 
   550, 551, 528, 528, 528, 528, 528, 528, 528, 528, 528, 528, 517, 579, 550, 
   550, 551, 528, 528, 528, 528, 528, 528, 528, 528, 528, 528, 549, 550, 550,

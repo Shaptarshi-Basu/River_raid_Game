@@ -104,6 +104,11 @@ void drawPlayer() {
     }
     if(deadframe == 100) {
       fadetarget = 255;
+      if(lives == 0) {
+        addScore();
+        setMenu(Menu.SCORES);
+        scroll_speed = 0;
+      }
     }
     
     deadframe++;

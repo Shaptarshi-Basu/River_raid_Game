@@ -37,7 +37,7 @@ class Bullet {
       }
     }
     else if(type == BulletType.SMALL) {
-      if(checkCollision(player[0], player[1], 8, 8, x, y, 8, 8) > 0) {
+      if(checkCollision(player[0], player[1], 32, 32, x, y, 8, 8) > 0) {
         killPlayer();
         free();
       }
@@ -49,7 +49,7 @@ class Bullet {
       return;
     checkTouch();
     x += vx;
-    y += vy;
+    y += vy + (scroll_speed / 2);
     if(x > VID_WIDTH + 16 || x < -16 || y > VID_HEIGHT + 16 || y < -16) {
       free();
       return;

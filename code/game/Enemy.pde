@@ -196,7 +196,7 @@ class Enemy {
     
     think--;
     if(think < 0) {
-      spawnBullet(x, y, 0, 16, 16*6 + 8, BulletType.SMALL);
+      spawnBullet(x, y, 0, 8, 16*6 + 8, BulletType.SMALL);
       think = 25;
     }
   }

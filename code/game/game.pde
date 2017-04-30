@@ -3,7 +3,7 @@ import processing.opengl.*;
 //SoundFile musicfile;
 
 public enum Menu {
-  ASKNAME, INTRO, MAIN, GAME
+  ASKNAME, INTRO, MAIN, GAME, SCORES
 }
 public Menu current_menu;
 public int current_menu_max;
@@ -21,6 +21,13 @@ void useMenu(int sel) {
   case MAIN:
     if(sel == 0)
       setMenu(Menu.GAME);
+    else if(sel == 1)
+      setMenu(Menu.SCORES);
+    else
+      exit();
+    break;
+  case SCORES:
+    setMenu(Menu.MAIN);
     break;
   case GAME:
     break;
@@ -39,10 +46,13 @@ void setMenu(Menu menu) {
     current_menu_selection = 0;
     break;
   case MAIN:
-    current_menu_max = 3;
+    current_menu_max = 2;
     current_menu_selection = 0;
     break;
   case GAME:
+    initScore();
+    stage = 1;
+    lives = 3;
     throttle = 2;
     showStageMessage();
     current_menu_max = 0;
@@ -51,6 +61,7 @@ void setMenu(Menu menu) {
     break;
   }
 }
+
 
 void setup() {
   
@@ -66,6 +77,8 @@ void setup() {
   initFuel();
   initScore();
   initFx();
+  loadScores();
+  
   
   throttle = scroll_speed;
   fade = 0;
@@ -222,6 +235,13 @@ void drawGui() {
     text("HIGH SCORES", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 2 + 24);
     text("QUIT", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 2 + 24*4);
     
+    if(current_menu_selection == 0)
+      text(">            <", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 2);
+    else if(current_menu_selection == 1)
+      text(">            <", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 2 + 24);
+    else
+      text(">            <", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 2 + 24*4);
+     
     text("MADE BY", VID_WIDTH/2, VID_HEIGHT/2 + HALF_SPRITE * 3);
     text("G21 PPKOSKI", VID_WIDTH/2, VID_HEIGHT/2 + HALF_SPRITE * 3 + 24);
     break;
@@ -254,6 +274,20 @@ void drawGui() {
     textSize(16 + scoreTime());
     text(scoreAmount(), 8, 38 + 20);
     fill(10, 15, 20);
+    break;
+  case SCORES:
+    beginShape(QUADS);
+    texture(sprite_texture);
+    drawWindow(VID_WIDTH/2 - HALF_SPRITE * 5, VID_HEIGHT/2 - HALF_SPRITE * 8, 10, 16);
+    endShape();
+    textAlign(CENTER, CENTER);
+    textSize(16);
+    fill(10, 15, 20);
+    text("HIGH SCORES", VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * 7);
+    for(int i = 0; i < 5; i++) {
+      text(scorenames[i], VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * (4 - i*2));
+      text(scores[i], VID_WIDTH/2, VID_HEIGHT/2 - HALF_SPRITE * (3.25 - i*2));
+    }
     break;
   default:
     text("UNKNOWN MENU SET", VID_WIDTH / 2, VID_HEIGHT / 2);

@@ -27,18 +27,6 @@ public static final String[] thestory = {
 
 public static final int thestory_lines = 17;
 
-public static final int BG_WIDTH = 15;
-public static final int BG_HEIGHT = 20;
-public static final int VID_WIDTH = 480;
-public static final int VID_HEIGHT = 640;
-public static final int SPRITE_SIZE = 64;
-public static final int HALF_SPRITE = 32;
-public static final float PIXEL_SIZE = 1.0/VID_WIDTH;
-public static final float SPRITE_SIZE_F = 32.0/VID_WIDTH;
-public static final int SPRITESHEET_SIZE = 16;
-public int[] background = new int[BG_WIDTH * (BG_HEIGHT * 2)];
-public int scroll;
 public int fade;
 public int fadetarget;
 public int stage_message_time;
-List<Enemy> enemyList=new ArrayList<Enemy>();
