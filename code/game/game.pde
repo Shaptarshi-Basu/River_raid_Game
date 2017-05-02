@@ -273,6 +273,8 @@ void drawGui() {
     textSize(16 + scoreTime());
     text(scoreAmount(), 8, 38 + 20);
     fill(10, 15, 20);
+    textAlign(RIGHT, TOP);
+    
     break;
   case SCORES:
     beginShape(QUADS);
